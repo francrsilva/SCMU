@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "765955768363",
+    "firebase_url": "https://scmu-dfb3d-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "scmu-dfb3d",
+    "storage_bucket": "scmu-dfb3d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765955768363:android:f195fc73cee5a78447ea6e",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLQQKVfRVyMGQfC_7-GYvT5VL0W2qUW1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:765955768363:android:4dd4aa1f506cce8547ea6e",
+        "android_client_info": {
+          "package_name": "com.example.scmu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLQQKVfRVyMGQfC_7-GYvT5VL0W2qUW1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

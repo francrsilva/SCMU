@@ -1,35 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/container"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="?attr/actionBarSize" >
+    android:padding="16dp">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="0dp"
+    <!-- Alarms Section -->
+    <TextView
+        android:id="@+id/alarmsTitleTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:background="?android:attr/windowBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_nav_menu"/>
+        android:text="Alarms"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-    <fragment
-        android:id="@+id/nav_host_fragment_activity_main"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <TextView
+        android:id="@+id/photoresistorLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/alarmsTitleTextView"
+        android:layout_marginTop="16dp"
+        android:text="Photoresistor:" />
+
+    <!-- EditText fields for alarm values -->
+    <EditText
+        android:id="@+id/photoresistorLowerEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/photoresistorLabelTextView"
+        android:layout_marginTop="8dp"
+        android:hint="Lower Value" />
+
+    <EditText
+        android:id="@+id/photoresistorUpperEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/photoresistorLowerEditText"
+        android:layout_marginTop="8dp"
+        android:hint="Upper Value" />
+
+    <!-- Add EditText fields for Sonar and Temperature alarms similarly -->
+
+    <!-- Controller Section -->
+    <TextView
+        android:id="@+id/controllerTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/photoresistorUpperEditText"
+        android:layout_marginTop="16dp"
+        android:text="Controller"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/sonarLowerEditText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@id/nav_view"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/mobile_navigation"
-    />
+        android:layout_height="wrap_content"
+        android:hint="Sonar Lower Value" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <EditText
+        android:id="@+id/sonarUpperEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Sonar Upper Value" />
+
+    <EditText
+        android:id="@+id/temperatureLowerEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Temperature Lower Value" />
+
+    <EditText
+        android:id="@+id/temperatureUpperEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Temperature Upper Value" />
+
+    <EditText
+        android:id="@+id/doorOpenEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Door Open (true/false)" />
+
+    <EditText
+        android:id="@+id/lightOnEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Light On (true/false)" />
+
+    <EditText
+        android:id="@+id/lightValueEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Light Value" />
+
+    <!-- EditText fields for controller values -->
+    <EditText
+        android:id="@+id/acOnEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/controllerTitleTextView"
+        android:layout_marginTop="8dp"
+        android:hint="AC On" />
+
+    <EditText
+        android:id="@+id/acValueEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/acOnEditText"
+        android:layout_marginTop="8dp"
+        android:hint="AC Value" />
+
+    <!-- Add EditText fields for DoorOpen, LightOn, and LightValue similarly -->
+
+    <!-- Update buttons -->
+    <Button
+        android:id="@+id/updateAlarmsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/acValueEditText"
+        android:layout_marginTop="16dp"
+        android:text="Update Alarms" />
+
+    <Button
+        android:id="@+id/updateControllerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/updateAlarmsButton"
+        android:layout_marginTop="8dp"
+        android:text="Update Controller" />
+
+</RelativeLayout>
