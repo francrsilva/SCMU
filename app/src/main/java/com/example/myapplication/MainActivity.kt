@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.*
 
@@ -104,6 +105,12 @@ class MainActivity : AppCompatActivity() {
                 val photoresistor = dataSnapshot.child("Photoresistor").getValue(Int::class.java)
                 val sonar = dataSnapshot.child("Sonar").getValue(Int::class.java)
                 val temperature = dataSnapshot.child("Temperature").getValue(Double::class.java)
+
+
+                findViewById<TextView>(R.id.doorSensorTextView).text = "Door: $door"
+                findViewById<TextView>(R.id.photoresistorSensorTextView).text = "Photoresistor: $photoresistor"
+                findViewById<TextView>(R.id.sonarSensorTextView).text = "Sonar: $sonar"
+                findViewById<TextView>(R.id.temperatureSensorTextView).text = "Temperature: $temperature"
 
                 // Log the retrieved values
                 Log.d("MainActivity", "Sensor Door: $door")
