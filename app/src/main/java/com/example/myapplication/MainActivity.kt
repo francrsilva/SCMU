@@ -32,6 +32,9 @@ class MainActivity : AppCompatActivity() {
     var photoresistorUpper = MAX_VALUE;
     var temperatureLower = MIN_VALUE;
     var temperatureUpper = MAX_VALUE;
+    private var sonarNotificationShown = false
+    private var photoresistorNotificationShown = false
+    private var temperatureNotificationShown = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,7 +136,6 @@ class MainActivity : AppCompatActivity() {
                 val sonar = dataSnapshot.child("Sonar").getValue(Float::class.java)
                 val temperature = dataSnapshot.child("Temperature").getValue(Double::class.java)
 
-
                 findViewById<TextView>(R.id.doorSensorTextView).text = "Door: $door"
                 findViewById<TextView>(R.id.photoresistorSensorTextView).text = "Photoresistor: $photoresistor"
                 findViewById<TextView>(R.id.sonarSensorTextView).text = "Sonar: $sonar"
@@ -147,17 +149,32 @@ class MainActivity : AppCompatActivity() {
 
                 // Check sonar range
                 if (sonar != null && sonar !in sonarLower..sonarUpper) {
-                    showNotification("Sonar Out of Range", "The sonar value is out of acceptable range.")
+                    if (!sonarNotificationShown) {
+                        showNotification("Sonar Out of Range", "The sonar value is out of acceptable range.")
+                        sonarNotificationShown = true
+                    }
+                } else {
+                    sonarNotificationShown = false
                 }
 
                 // Check photoresistor range
                 if (photoresistor != null && (photoresistor < photoresistorLower || photoresistor > photoresistorUpper)) {
-                    showNotification("Photoresistor Out of Range", "The photoresistor value is out of acceptable range.")
+                    if (!photoresistorNotificationShown) {
+                        showNotification("Photoresistor Out of Range", "The photoresistor value is out of acceptable range.")
+                        photoresistorNotificationShown = true
+                    }
+                } else {
+                    photoresistorNotificationShown = false
                 }
 
                 // Check temperature range
                 if (temperature != null && (temperature < temperatureLower || temperature > temperatureUpper)) {
-                    showNotification("Temperature Out of Range", "The temperature value is out of acceptable range.")
+                    if (!temperatureNotificationShown) {
+                        showNotification("Temperature Out of Range", "The temperature value is out of acceptable range.")
+                        temperatureNotificationShown = true
+                    }
+                } else {
+                    temperatureNotificationShown = false
                 }
             }
 
@@ -166,6 +183,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
 
     private fun updateAlarmValues() {
         // Retrieve new values from EditText fields or any other input method
