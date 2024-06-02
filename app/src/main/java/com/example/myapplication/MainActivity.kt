@@ -28,6 +28,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sensorRef: DatabaseReference
     var sonarLower = MIN_VALUE;
     var sonarUpper = MAX_VALUE;
+    var photoresistorLower = MIN_VALUE;
+    var photoresistorUpper = MAX_VALUE;
+    var temperatureLower = MIN_VALUE;
+    var temperatureUpper = MAX_VALUE;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,12 +70,12 @@ class MainActivity : AppCompatActivity() {
     private fun retrieveAlarmValues() {
         alarmsRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val photoresistorLower = dataSnapshot.child("Photoresistor/Lower").getValue(Int::class.java)
-                val photoresistorUpper = dataSnapshot.child("Photoresistor/Upper").getValue(Int::class.java)
+                photoresistorLower = dataSnapshot.child("Photoresistor/Lower").getValue(Float::class.java)!!
+                photoresistorUpper = dataSnapshot.child("Photoresistor/Upper").getValue(Float::class.java)!!
                 sonarLower = dataSnapshot.child("Sonar/Lower").getValue(Float::class.java)!!
                 sonarUpper = dataSnapshot.child("Sonar/Upper").getValue(Float::class.java)!!
-                val temperatureLower = dataSnapshot.child("Temperature/Lower").getValue(Int::class.java)
-                val temperatureUpper = dataSnapshot.child("Temperature/Upper").getValue(Int::class.java)
+                temperatureLower = dataSnapshot.child("Temperature/Lower").getValue(Float::class.java)!!
+                temperatureUpper = dataSnapshot.child("Temperature/Upper").getValue(Float::class.java)!!
 
                 // Log the retrieved values
                 Log.d("MainActivity", "Photoresistor Lower: $photoresistorLower, Upper: $photoresistorUpper")
@@ -140,8 +144,20 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainActivity", "Sensor Photoresistor: $photoresistor")
                 Log.d("MainActivity", "Sensor Sonar: $sonar")
                 Log.d("MainActivity", "Sensor Temperature: $temperature")
-                if (sonar!! !in sonarLower..sonarUpper) {
+
+                // Check sonar range
+                if (sonar != null && sonar !in sonarLower..sonarUpper) {
                     showNotification("Sonar Out of Range", "The sonar value is out of acceptable range.")
+                }
+
+                // Check photoresistor range
+                if (photoresistor != null && (photoresistor < photoresistorLower || photoresistor > photoresistorUpper)) {
+                    showNotification("Photoresistor Out of Range", "The photoresistor value is out of acceptable range.")
+                }
+
+                // Check temperature range
+                if (temperature != null && (temperature < temperatureLower || temperature > temperatureUpper)) {
+                    showNotification("Temperature Out of Range", "The temperature value is out of acceptable range.")
                 }
             }
 
@@ -153,12 +169,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateAlarmValues() {
         // Retrieve new values from EditText fields or any other input method
-        val newPhotoresistorLower = findViewById<EditText>(R.id.photoresistorLowerEditText).text.toString().toInt()
-        val newPhotoresistorUpper = findViewById<EditText>(R.id.photoresistorUpperEditText).text.toString().toInt()
-        val newSonarLower = findViewById<EditText>(R.id.sonarLowerEditText).text.toString().toInt()
-        val newSonarUpper = findViewById<EditText>(R.id.sonarUpperEditText).text.toString().toInt()
-        val newTemperatureLower = findViewById<EditText>(R.id.temperatureLowerEditText).text.toString().toInt()
-        val newTemperatureUpper = findViewById<EditText>(R.id.temperatureUpperEditText).text.toString().toInt()
+        val newPhotoresistorLower = findViewById<EditText>(R.id.photoresistorLowerEditText).text.toString().toFloat()
+        val newPhotoresistorUpper = findViewById<EditText>(R.id.photoresistorUpperEditText).text.toString().toFloat()
+        val newSonarLower = findViewById<EditText>(R.id.sonarLowerEditText).text.toString().toFloat()
+        val newSonarUpper = findViewById<EditText>(R.id.sonarUpperEditText).text.toString().toFloat()
+        val newTemperatureLower = findViewById<EditText>(R.id.temperatureLowerEditText).text.toString().toFloat()
+        val newTemperatureUpper = findViewById<EditText>(R.id.temperatureUpperEditText).text.toString().toFloat()
 
         // Update values in Firebase Database
         alarmsRef.child("Photoresistor/Lower").setValue(newPhotoresistorLower)
@@ -177,10 +193,10 @@ class MainActivity : AppCompatActivity() {
     private fun updateControllerValues() {
         // Retrieve new values from EditText fields or any other input method
         val newACOn = findViewById<EditText>(R.id.acOnEditText).text.toString().toBoolean()
-        val newACValue = findViewById<EditText>(R.id.acValueEditText).text.toString().toInt()
+        val newACValue = findViewById<EditText>(R.id.acValueEditText).text.toString().toFloat()
         val newDoorOpen = findViewById<EditText>(R.id.doorOpenEditText).text.toString().toBoolean()
         val newLightOn = findViewById<EditText>(R.id.lightOnEditText).text.toString().toBoolean()
-        val newLightValue = findViewById<EditText>(R.id.lightValueEditText).text.toString().toInt()
+        val newLightValue = findViewById<EditText>(R.id.lightValueEditText).text.toString().toFloat()
 
         // Update values in Firebase Database
         controllerRef.child("ACOn").setValue(newACOn)
