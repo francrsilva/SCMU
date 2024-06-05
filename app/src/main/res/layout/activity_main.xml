@@ -89,6 +89,13 @@
             android:hint="Upper Value"
             android:layout_marginTop="8dp" />
 
+        <Button
+            android:id="@+id/updatePhotoresistorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Photoresistor"
+            android:layout_marginTop="8dp" />
+
         <TextView
             android:id="@+id/sonarLabelTextView"
             android:layout_width="wrap_content"
@@ -108,6 +115,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Sonar Upper Value"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/updateSonarButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Sonar"
             android:layout_marginTop="8dp" />
 
         <TextView
@@ -131,6 +145,13 @@
             android:hint="Temperature Upper Value"
             android:layout_marginTop="8dp" />
 
+        <Button
+            android:id="@+id/updateTemperatureButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Temperature"
+            android:layout_marginTop="8dp" />
+
         <!-- Controller Section -->
         <TextView
             android:id="@+id/controllerTitleTextView"
@@ -148,18 +169,24 @@
             android:layout_height="wrap_content"
             android:text="AC:" />
 
-        <EditText
-            android:id="@+id/acOnEditText"
+        <Spinner
+            android:id="@+id/acOnSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="AC On"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"/>
 
         <EditText
             android:id="@+id/acValueEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="AC Value"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/updateAcButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update AC"
             android:layout_marginTop="8dp" />
 
         <TextView
@@ -174,6 +201,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Door Open (true/false)"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/updateDoorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Door"
             android:layout_marginTop="8dp" />
 
         <TextView
@@ -197,19 +231,12 @@
             android:hint="Light Value"
             android:layout_marginTop="8dp" />
 
-        <!-- Update buttons -->
         <Button
-            android:id="@+id/updateAlarmsButton"
+            android:id="@+id/updateLightButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Update Alarms" />
+            android:text="Update Light"
+            android:layout_marginTop="8dp" />
 
-        <Button
-            android:id="@+id/updateControllerButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Update Controller" />
     </LinearLayout>
 </ScrollView>

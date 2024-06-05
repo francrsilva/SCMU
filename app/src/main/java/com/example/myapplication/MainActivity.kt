@@ -8,8 +8,10 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -50,14 +52,36 @@ class MainActivity : AppCompatActivity() {
         retrieveControllerValues()
         retrieveSensorValuesContinuously()
 
-        // Setup button click listener to update alarm values
-        findViewById<Button>(R.id.updateAlarmsButton).setOnClickListener {
-            updateAlarmValues()
+        // Setup button click listeners to update alarm values
+        findViewById<Button>(R.id.updatePhotoresistorButton).setOnClickListener {
+            updatePhotoresistorValues()
+        }
+        findViewById<Button>(R.id.updateSonarButton).setOnClickListener {
+            updateSonarValues()
+        }
+        findViewById<Button>(R.id.updateTemperatureButton).setOnClickListener {
+            updateTemperatureValues()
         }
 
-        // Setup button click listener to update controller values
-        findViewById<Button>(R.id.updateControllerButton).setOnClickListener {
-            updateControllerValues()
+        // Setup button click listeners to update controller values
+        findViewById<Button>(R.id.updateAcButton).setOnClickListener {
+            updateACValues()
+        }
+        findViewById<Button>(R.id.updateDoorButton).setOnClickListener {
+            updateDoorValues()
+        }
+        findViewById<Button>(R.id.updateLightButton).setOnClickListener {
+            updateLightValues()
+        }
+
+        val acOnSpinner: Spinner = findViewById(R.id.acOnSpinner)
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.boolean_values,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            acOnSpinner.adapter = adapter
         }
     }
 
@@ -115,7 +139,11 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainActivity", "Light On: $lightOn, Light Value: $lightValue")
 
                 // Display retrieved values in EditText fields
-                findViewById<EditText>(R.id.acOnEditText).setText(acOn.toString())
+                val acOnSpinner: Spinner = findViewById(R.id.acOnSpinner)
+                val acOnValue = if (acOn == true) "true" else "false"
+                val acOnPosition = (acOnSpinner.adapter as ArrayAdapter<String>).getPosition(acOnValue)
+                acOnSpinner.setSelection(acOnPosition)
+
                 findViewById<EditText>(R.id.acValueEditText).setText(acValue.toString())
                 findViewById<EditText>(R.id.doorOpenEditText).setText(doorOpen.toString())
                 findViewById<EditText>(R.id.lightOnEditText).setText(lightOn.toString())
@@ -184,48 +212,80 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-
-    private fun updateAlarmValues() {
+    private fun updatePhotoresistorValues() {
         // Retrieve new values from EditText fields or any other input method
         val newPhotoresistorLower = findViewById<EditText>(R.id.photoresistorLowerEditText).text.toString().toFloat()
         val newPhotoresistorUpper = findViewById<EditText>(R.id.photoresistorUpperEditText).text.toString().toFloat()
-        val newSonarLower = findViewById<EditText>(R.id.sonarLowerEditText).text.toString().toFloat()
-        val newSonarUpper = findViewById<EditText>(R.id.sonarUpperEditText).text.toString().toFloat()
-        val newTemperatureLower = findViewById<EditText>(R.id.temperatureLowerEditText).text.toString().toFloat()
-        val newTemperatureUpper = findViewById<EditText>(R.id.temperatureUpperEditText).text.toString().toFloat()
 
         // Update values in Firebase Database
         alarmsRef.child("Photoresistor/Lower").setValue(newPhotoresistorLower)
         alarmsRef.child("Photoresistor/Upper").setValue(newPhotoresistorUpper)
+
+        // Log the updated values
+        Log.d("MainActivity", "Updated Photoresistor Lower: $newPhotoresistorLower, Upper: $newPhotoresistorUpper")
+    }
+
+    private fun updateSonarValues() {
+        // Retrieve new values from EditText fields or any other input method
+        val newSonarLower = findViewById<EditText>(R.id.sonarLowerEditText).text.toString().toFloat()
+        val newSonarUpper = findViewById<EditText>(R.id.sonarUpperEditText).text.toString().toFloat()
+
+        // Update values in Firebase Database
         alarmsRef.child("Sonar/Lower").setValue(newSonarLower)
         alarmsRef.child("Sonar/Upper").setValue(newSonarUpper)
+
+        // Log the updated values
+        Log.d("MainActivity", "Updated Sonar Lower: $newSonarLower, Upper: $newSonarUpper")
+    }
+
+    private fun updateTemperatureValues() {
+        // Retrieve new values from EditText fields or any other input method
+        val newTemperatureLower = findViewById<EditText>(R.id.temperatureLowerEditText).text.toString().toFloat()
+        val newTemperatureUpper = findViewById<EditText>(R.id.temperatureUpperEditText).text.toString().toFloat()
+
+        // Update values in Firebase Database
         alarmsRef.child("Temperature/Lower").setValue(newTemperatureLower)
         alarmsRef.child("Temperature/Upper").setValue(newTemperatureUpper)
 
         // Log the updated values
-        Log.d("MainActivity", "Updated Photoresistor Lower: $newPhotoresistorLower, Upper: $newPhotoresistorUpper")
-        Log.d("MainActivity", "Updated Sonar Lower: $newSonarLower, Upper: $newSonarUpper")
         Log.d("MainActivity", "Updated Temperature Lower: $newTemperatureLower, Upper: $newTemperatureUpper")
     }
 
-    private fun updateControllerValues() {
+    private fun updateACValues() {
         // Retrieve new values from EditText fields or any other input method
-        val newACOn = findViewById<EditText>(R.id.acOnEditText).text.toString().toBoolean()
+        val acOnSpinner: Spinner = findViewById(R.id.acOnSpinner)
+        val newACOn = acOnSpinner.selectedItem.toString().toBoolean()
         val newACValue = findViewById<EditText>(R.id.acValueEditText).text.toString().toFloat()
-        val newDoorOpen = findViewById<EditText>(R.id.doorOpenEditText).text.toString().toBoolean()
-        val newLightOn = findViewById<EditText>(R.id.lightOnEditText).text.toString().toBoolean()
-        val newLightValue = findViewById<EditText>(R.id.lightValueEditText).text.toString().toFloat()
 
         // Update values in Firebase Database
         controllerRef.child("ACOn").setValue(newACOn)
         controllerRef.child("ACValue").setValue(newACValue)
+
+        // Log the updated values
+        Log.d("MainActivity", "Updated AC On: $newACOn, AC Value: $newACValue")
+    }
+
+    private fun updateDoorValues() {
+        // Retrieve new values from EditText fields or any other input method
+        val newDoorOpen = findViewById<EditText>(R.id.doorOpenEditText).text.toString().toBoolean()
+
+        // Update values in Firebase Database
         controllerRef.child("DoorOpen").setValue(newDoorOpen)
+
+        // Log the updated values
+        Log.d("MainActivity", "Updated Door Open: $newDoorOpen")
+    }
+
+    private fun updateLightValues() {
+        // Retrieve new values from EditText fields or any other input method
+        val newLightOn = findViewById<EditText>(R.id.lightOnEditText).text.toString().toBoolean()
+        val newLightValue = findViewById<EditText>(R.id.lightValueEditText).text.toString().toFloat()
+
+        // Update values in Firebase Database
         controllerRef.child("LightOn").setValue(newLightOn)
         controllerRef.child("LightValue").setValue(newLightValue)
 
         // Log the updated values
-        Log.d("MainActivity", "Updated AC On: $newACOn, AC Value: $newACValue")
-        Log.d("MainActivity", "Updated Door Open: $newDoorOpen")
         Log.d("MainActivity", "Updated Light On: $newLightOn, Light Value: $newLightValue")
     }
 
