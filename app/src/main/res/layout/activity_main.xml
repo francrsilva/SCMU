@@ -80,14 +80,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Lower Value"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"/>
 
         <EditText
             android:id="@+id/photoresistorUpperEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Upper Value"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"/>
 
         <Button
             android:id="@+id/updatePhotoresistorButton"
@@ -108,14 +110,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Sonar Lower Value"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"/>
 
         <EditText
             android:id="@+id/sonarUpperEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Sonar Upper Value"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"/>
 
         <Button
             android:id="@+id/updateSonarButton"
@@ -136,14 +140,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Temperature Lower Value"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"/>
 
         <EditText
             android:id="@+id/temperatureUpperEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Temperature Upper Value"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"/>
 
         <Button
             android:id="@+id/updateTemperatureButton"
@@ -180,7 +186,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="AC Value"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"/>
 
         <Button
             android:id="@+id/updateAcButton"
@@ -227,7 +234,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Light Value"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:inputType="numberDecimal"/>
 
         <Button
             android:id="@+id/updateLightButton"
