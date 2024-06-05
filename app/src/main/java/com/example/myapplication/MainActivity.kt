@@ -74,16 +74,23 @@ class MainActivity : AppCompatActivity() {
             updateLightValues()
         }
 
-        val acOnSpinner: Spinner = findViewById(R.id.acOnSpinner)
+        setupSpinner(R.id.acOnSpinner)
+        setupSpinner(R.id.lightOnSpinner)
+        setupSpinner(R.id.doorOnSpinner)
+    }
+
+    private fun setupSpinner(spinnerId: Int) {
+        val spinner: Spinner = findViewById(spinnerId)
         ArrayAdapter.createFromResource(
             this,
             R.array.boolean_values,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            acOnSpinner.adapter = adapter
+            spinner.adapter = adapter
         }
     }
+
 
     private fun retrieveSensorValuesContinuously() {
         GlobalScope.launch {
@@ -139,14 +146,11 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainActivity", "Light On: $lightOn, Light Value: $lightValue")
 
                 // Display retrieved values in EditText fields
-                val acOnSpinner: Spinner = findViewById(R.id.acOnSpinner)
-                val acOnValue = if (acOn == true) "true" else "false"
-                val acOnPosition = (acOnSpinner.adapter as ArrayAdapter<String>).getPosition(acOnValue)
-                acOnSpinner.setSelection(acOnPosition)
+                setSpinnerSelection(R.id.acOnSpinner, acOn)
+                setSpinnerSelection(R.id.lightOnSpinner, lightOn)
+                setSpinnerSelection(R.id.doorOnSpinner, doorOpen)
 
                 findViewById<EditText>(R.id.acValueEditText).setText(acValue.toString())
-                findViewById<EditText>(R.id.doorOpenEditText).setText(doorOpen.toString())
-                findViewById<EditText>(R.id.lightOnEditText).setText(lightOn.toString())
                 findViewById<EditText>(R.id.lightValueEditText).setText(lightValue.toString())
             }
 
@@ -154,6 +158,13 @@ class MainActivity : AppCompatActivity() {
                 Log.e("MainActivity", "Failed to read values", databaseError.toException())
             }
         })
+    }
+
+    private fun setSpinnerSelection(spinnerId: Int, booleanValue: Boolean?) {
+        val spinner: Spinner = findViewById(spinnerId)
+        val value = if (booleanValue == true) "true" else "false"
+        val position = (spinner.adapter as ArrayAdapter<String>).getPosition(value)
+        spinner.setSelection(position)
     }
 
     private fun retrieveSensorValues() {
@@ -267,7 +278,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateDoorValues() {
         // Retrieve new values from EditText fields or any other input method
-        val newDoorOpen = findViewById<EditText>(R.id.doorOpenEditText).text.toString().toBoolean()
+        val doorOnSpinner: Spinner = findViewById(R.id.doorOnSpinner)
+        val newDoorOpen = doorOnSpinner.selectedItem.toString().toBoolean()
 
         // Update values in Firebase Database
         controllerRef.child("DoorOpen").setValue(newDoorOpen)
@@ -278,7 +290,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateLightValues() {
         // Retrieve new values from EditText fields or any other input method
-        val newLightOn = findViewById<EditText>(R.id.lightOnEditText).text.toString().toBoolean()
+        val lightOnSpinner: Spinner = findViewById(R.id.lightOnSpinner)
+        val newLightOn = lightOnSpinner.selectedItem.toString().toBoolean()
         val newLightValue = findViewById<EditText>(R.id.lightValueEditText).text.toString().toFloat()
 
         // Update values in Firebase Database

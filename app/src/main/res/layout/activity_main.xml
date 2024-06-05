@@ -196,12 +196,11 @@
             android:text="Door:"
             android:layout_marginTop="16dp" />
 
-        <EditText
-            android:id="@+id/doorOpenEditText"
+        <Spinner
+            android:id="@+id/doorOnSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Door Open (true/false)"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"/>
 
         <Button
             android:id="@+id/updateDoorButton"
@@ -217,12 +216,11 @@
             android:text="Light:"
             android:layout_marginTop="16dp" />
 
-        <EditText
-            android:id="@+id/lightOnEditText"
+        <Spinner
+            android:id="@+id/lightOnSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Light On (true/false)"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"/>
 
         <EditText
             android:id="@+id/lightValueEditText"
